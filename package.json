@@ -1,0 +1,19 @@
+{
+  "name": "ld-requester",
+  "version": "1.0.0",
+  "description": "a tiny fetch wrapper and its \"aliasser\", intented to make requests to an API easier [ work in progress ]   ",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loicdurand/ld-requester.git"
+  },
+  "author": "Loïc DURAND",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loicdurand/ld-requester/issues"
+  },
+  "homepage": "https://github.com/loicdurand/ld-requester#readme"
+}

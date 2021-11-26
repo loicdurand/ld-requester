@@ -43,21 +43,29 @@ export default class Aliasser {
         const // 
             { requester, schema, loader = {
                 loading: false
-            } } = options,
-            { methods, tables } = schema,
-            schemaParser = new SchemaParser(schema),
-            { schemas } = schemaParser;
+            } } = options;
 
         this.#requester = requester;
         this.#loader = loader;
 
-        this.#setTables(tables, methods, schemas);
+        if (schema) {
+            this.schema = schema;
+        }
 
         return this;
 
     }
 
-    #setTables(tables, methodsGetter, schemas) {
+    set schema(schema) {
+        const // 
+            schemaParser = new SchemaParser(schema),
+            { schemas } = schemaParser;
+        this.#setTables(schema, schemas);
+    }
+
+    #setTables(schema, schemas) {
+
+        const { methods: methodsGetter, tables } = schema;
 
         tables.forEach(({ table, url, schema }) => {
 

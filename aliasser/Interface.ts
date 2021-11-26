@@ -29,7 +29,7 @@ export interface TableInterface {
 
 export interface OptionsInterface {
     requester: RequesterInterface;
-    schema: {
+    schema?: {
         methods: any;
         tables: Array<TableInterface>
     };
