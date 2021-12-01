@@ -58,9 +58,9 @@ export default class SchemaParser {
                     if (isType.string(constraints.type)) {
                         type = constraints.type;
                         type = type.toLowerCase();
-                    } else if (isType.primitive(constraints.type)) {
+                    } else if (isType.primitive(constraints.type)||isType.function(constraints.type)) {
                         type = constraints.type.name.toLowerCase();
-                    }
+                    } 
 
                     functions.push(value => {
                         if (!constraints.required && !value)

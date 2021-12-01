@@ -25,56 +25,56 @@ insertRule(`
 
 export default class Loader {
 
-    #spinnerId: string;
-    #spinner: HTMLElement;
-    #minDuration: number = 1200;
-    #visibleSince: number = 0;
+    spinnerId: string;
+    spinner: HTMLElement;
+    minDuration: number = 1200;
+    visibleSince: number = 0;
 
     constructor(minDurationMs: number) {
-        this.#visibleSince = 0;
-        this.#minDuration = minDurationMs;
-        this.#spinnerId = `loader-${unicId()}`;
-        this.#spinner = document.getElementById(this.#spinnerId) || document.body.appendChild(container);
+        this.visibleSince = 0;
+        this.minDuration = minDurationMs;
+        this.spinnerId = `loader-${unicId()}`;
+        this.spinner = document.getElementById(this.spinnerId) || document.body.appendChild(container);
         return this;
     }
 
     get element() {
-        return this.#spinner;
+        return this.spinner;
     }
 
     get minDurationMs() {
-        return this.#minDuration;
+        return this.minDuration;
     }
 
     get loading() {
-        return !this.#spinner.hidden;
+        return !this.spinner.hidden;
     }
 
     set loading(bool: boolean) {
         if (!bool) {
             let // 
                 actualTimestamp = Date.now(),
-                timeoutDelay = this.#minDuration + this.#visibleSince - actualTimestamp;
+                timeoutDelay = this.minDuration + this.visibleSince - actualTimestamp;
 
             setTimeout(() => {
-                this.#spinner.innerHTML = '';
-                this.#spinner.hidden = true;
+                this.spinner.innerHTML = '';
+                this.spinner.hidden = true;
             }, timeoutDelay > 0 ? timeoutDelay : 0);
 
         } else {
-            this.#visibleSince = Date.now();
-            this.#spinner.hidden = !bool;
+            this.visibleSince = Date.now();
+            this.spinner.hidden = !bool;
         }
     }
 
     set content(content: string | HTMLElement | ((elt: any) => any)) {
-        this.#spinner.innerHTML = '';
+        this.spinner.innerHTML = '';
         this.loading = true;
         if (typeof content === 'string')
-            this.#spinner.innerHTML = content;
+            this.spinner.innerHTML = content;
         else if (content instanceof Element)
-            this.#spinner.appendChild(content);
+            this.spinner.appendChild(content);
         else if (isFunc(content))
-            content(this.#spinner);
+            content(this.spinner);
     }
 };

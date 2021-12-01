@@ -1,17 +1,17 @@
 class Xhr {
 
-    #headers: object;
-    #format: string;
+    headers: object;
+    format: string;
 
     constructor() {
-        this.#headers = {};
-        this.#format = 'json';
+        this.headers = {};
+        this.format = 'json';
         return this;
     }
 
     setHeaders(headers: object) {
         for (let header in headers)
-            this.#headers[header] = headers[header];
+            this.headers[header] = headers[header];
         return this;
     }
 
@@ -21,7 +21,7 @@ class Xhr {
             const // 
                 options = {
                     method: 'get',
-                    headers: this.#headers
+                    headers: this.headers
                 },
                 response = await fetch(url, options);
 
@@ -31,7 +31,7 @@ class Xhr {
             }
 
             const //
-                format = this.#format in response ? this.#format : 'json',
+                format = this.format in response ? this.format : 'json',
                 data = await response[format]();
             return data;
         } catch (error) {
@@ -45,7 +45,7 @@ class Xhr {
                 body = JSON.stringify(obj),
                 options = {
                     method: 'post',
-                    headers: this.#headers,
+                    headers: this.headers,
                     body
                 },
                 response = await fetch(url, options);
@@ -56,7 +56,7 @@ class Xhr {
             }
 
             const //
-                format = this.#format in response ? this.#format : 'json',
+                format = this.format in response ? this.format : 'json',
                 data = await response[format]();
             return data;
         } catch (error) {
@@ -70,7 +70,7 @@ class Xhr {
                 body = JSON.stringify(obj),
                 options = {
                     method: 'put',
-                    headers: this.#headers,
+                    headers: this.headers,
                     body
                 },
                 response = await fetch(url, options);
@@ -81,7 +81,7 @@ class Xhr {
             }
 
             const //
-                format = this.#format in response ? this.#format : 'json',
+                format = this.format in response ? this.format : 'json',
                 data = await response[format]();
             return data;
         } catch (error) {
@@ -94,7 +94,7 @@ class Xhr {
             const // 
                 options = {
                     method: 'delete',
-                    headers: this.#headers
+                    headers: this.headers
                 },
                 response = await fetch(url, options);
 

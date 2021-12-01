@@ -9,12 +9,12 @@ export const //
 
 export default class {
 
-    #aliasser;
+    aliasser;
 
     constructor(schema) {
 
         const // 
-            loader = new Loader(800),
+            loader = new Loader(1200),
             requester = new Requester()
                 .setHeaders({
                     'Accept': 'application/json',
@@ -22,9 +22,9 @@ export default class {
                 });
 
         if (schema) {
-            this.#aliasser = new Aliasser({ requester, loader });
-            this.#aliasser.schema = schema;
-            return this.#aliasser
+            this.aliasser = new Aliasser({ requester, loader });
+            this.aliasser.schema = schema;
+            return this.aliasser
         }
 
         return this;
