@@ -72,8 +72,9 @@ export default class Aliasser {
             const // 
                 { events = {} } = schema || {},
                 loader = this.loader,
-                loaderContainer = loader.element,
+                loaderContainer = loader.element || document.getElementById(loader.spinnerId),
                 showLoader = (method) => {
+
                     if (loaderContainer && isFunc(events[method])) {
                         events[method](loaderContainer);
                         loader.loading = true;

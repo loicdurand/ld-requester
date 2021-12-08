@@ -36,12 +36,10 @@ export default class Loader {
     visibleSince: number = 0;
 
     constructor(minDurationMs: number) {
-        onReady('body').then(body => {
-            this.spinner = document.getElementById(this.spinnerId) || document.querySelector('body').appendChild(container);
-        });
+        this.spinnerId = containerId;
+        this.spinner = document.getElementById(this.spinnerId) || document.querySelector('body').appendChild(container);
         this.visibleSince = 0;
         this.minDuration = minDurationMs;
-        this.spinnerId = `loader-${unicId()}`;
         return this;
     }
 
