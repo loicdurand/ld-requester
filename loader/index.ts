@@ -1,4 +1,9 @@
 const //
+    onReady = async (selector: string): Promise<Element> => {
+        while (document.querySelector(selector) === null)
+            await new Promise(resolve => requestAnimationFrame(resolve))
+        return document.querySelector(selector);
+    },
     sheet = document.head.appendChild(document.createElement("style")).sheet,
     insertRule = rule => sheet.insertRule(rule, sheet.cssRules.length),
     isFunc = object => ['[object AsyncFunction]', '[object Function]'].includes(({}).toString.call(object)),
@@ -31,10 +36,10 @@ export default class Loader {
     visibleSince: number = 0;
 
     constructor(minDurationMs: number) {
+        this.spinnerId = containerId;
+        this.spinner = document.getElementById(this.spinnerId) || document.querySelector('body').appendChild(container);
         this.visibleSince = 0;
         this.minDuration = minDurationMs;
-        this.spinnerId = `loader-${unicId()}`;
-        this.spinner = document.getElementById(this.spinnerId) || document.body.appendChild(container);
         return this;
     }
 
