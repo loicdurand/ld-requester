@@ -35,8 +35,8 @@ const //
 
 export default class Aliasser {
 
-    #requester: RequesterInterface;
-    #loader;
+    requester: RequesterInterface;
+    loader;
 
     constructor(options: OptionsInterface) {
 
@@ -45,8 +45,8 @@ export default class Aliasser {
                 loading: false
             } } = options;
 
-        this.#requester = requester;
-        this.#loader = loader;
+        this.requester = requester;
+        this.loader = loader;
 
         if (schema) {
             this.schema = schema;
@@ -60,10 +60,10 @@ export default class Aliasser {
         const // 
             schemaParser = new SchemaParser(schema),
             { schemas } = schemaParser;
-        this.#setTables(schema, schemas);
+        this.setTables(schema, schemas);
     }
 
-    #setTables(schema, schemas) {
+    setTables(schema, schemas) {
 
         const { methods: methodsGetter, tables } = schema;
 
@@ -71,11 +71,11 @@ export default class Aliasser {
 
             const // 
                 { events = {} } = schema || {},
-                loader = this.#loader,
+                loader = this.loader,
                 loaderContainer = loader.element,
-                showLoader = () => {
-                    if (loaderContainer && isFunc(events.get)) {
-                        events.get(loaderContainer);
+                showLoader = (method) => {
+                    if (loaderContainer && isFunc(events[method])) {
+                        events[method](loaderContainer);
                         loader.loading = true;
                     }
                 },
@@ -84,10 +84,10 @@ export default class Aliasser {
 
                     get: async (url) => {
 
-                        showLoader();
+                        showLoader('get');
 
                         try {
-                            const result = await this.#requester.get(url);
+                            const result = await this.requester.get(url);
                             loader.loading = false;
                             return result;
                         } catch (error) {
@@ -100,13 +100,13 @@ export default class Aliasser {
 
                     post: async (url, data) => {
 
-                        showLoader();
+                        showLoader('post');
 
                         try {
                             const [isValidObj, postedObj = {}, invalidFields = []] = isValid(data, schemas[table]);
 
                             if (isValidObj) {
-                                const result = await this.#requester.post(url, postedObj);
+                                const result = await this.requester.post(url, postedObj);
                                 loader.loading = false;
                                 return result;
                             }
@@ -121,13 +121,13 @@ export default class Aliasser {
 
                     put: async (url, data) => {
 
-                        showLoader();
+                        showLoader('put');
 
                         try {
                             const [isValidObj, postedObj = {}, invalidFields = []] = isValid(data, schemas[table]);
 
                             if (isValidObj) {
-                                const result = await this.#requester.put(url, postedObj);
+                                const result = await this.requester.put(url, postedObj);
                                 loader.loading = false;
                                 return result;
                             }
@@ -142,10 +142,10 @@ export default class Aliasser {
 
                     delete: async (url) => {
 
-                        showLoader();
+                        showLoader('delete');
 
                         try {
-                            const result = await this.#requester.delete(url);
+                            const result = await this.requester.delete(url);
                             loader.loading = false;
                             return result;
                         } catch (error) {
