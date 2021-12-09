@@ -11,10 +11,10 @@ export default class {
 
     aliasser;
 
-    constructor(schema) {
+    constructor(schema, loaderMinDurationMs=1200) {
 
         const // 
-            loader = new Loader(1200),
+            loader = new Loader(loaderMinDurationMs),
             requester = new Requester()
                 .setHeaders({
                     'Accept': 'application/json',
